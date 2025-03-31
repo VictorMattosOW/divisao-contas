@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Users } from '../models/users.model'
 import { Router } from '@angular/router'
 import { switchMap } from 'rxjs/operators'
@@ -11,13 +11,22 @@ import { AuthStateService } from 'src/app/services/auth-state.service'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
     private router: Router,
     private authStateService: AuthStateService
   ) { }
+
+  ngOnInit(): void {
+    this.authStateService.setLoggedIn(false)
+    const token = this.authService.getToken()
+    if (token) {
+      this.router.navigate(['ambiente'])
+    }
+  }
+
   abaAtiva: 'criar' | 'logar' = 'criar'; // Controla a aba ativa
   errorMsg = ''
 
@@ -48,7 +57,10 @@ export class LoginComponent {
         return this.authService.login(credenciais) // Retorna a requisição de login
       })
     ).subscribe({
-      next: (_response) => { },
+      next: (response) => {
+        this.setToken(response)
+        this.router.navigate(['ambiente']) // Navega para a rota 'ambiente' após o login
+      },
       error: (error) => {
         if (error.status === 409) {
           this.errorMsg = error.error.message // Exibe mensagem de erro se o email já existir
@@ -63,14 +75,18 @@ export class LoginComponent {
   onLogar() {
     this.authService.login(this.logar).subscribe({
       next: (response) => {
-        const { token } = response
-        localStorage.setItem('token', token)
-        this.authStateService.setLoggedIn(true)
+        this.setToken(response)
         this.router.navigate(['ambiente']) // Navega para a rota 'ambiente' após o login
       },
       error: (error) => {
         console.error(error)
       }
     })
+  }
+
+  setToken(response: { token: string }) {
+    const { token } = response
+    localStorage.setItem('token', token)
+    this.authStateService.setLoggedIn(true)
   }
 }
