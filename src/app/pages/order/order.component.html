@@ -3,8 +3,8 @@
   <dialog class="modal" #dialog>
     <div class="modal-content" *ngIf="orderToEditOrDelete">
       <div >
-        <h5>Tem certeza que deseja excluir o item {{ orderToEditOrDelete.name }}?</h5>
-        <legend>Se excluir, esse item não entrará na conta, ok?</legend>
+        <h2>Tem certeza que deseja excluir o item <b>{{ orderToEditOrDelete.name }}</b>?</h2>
+        <p>Se excluir, esse item não entrará na conta, ok?</p>
       </div>
       <div class="btn-edit">
         <app-button
@@ -34,13 +34,13 @@
 
     <section class="card" *ngIf="orders.length !== 0 && !isEdit">
       <header class="card_title">
-        <h5>Já ta na conta</h5>
+        <h3>Já ta na conta</h3>
       </header>
       <div class="info" *ngFor="let order of orders; let i = index">
         <div class="orderContent">
-          <legend>{{ order.name }}</legend>
+          <h4>{{ order.name }}</h4>
           <div class="legend-name-content">
-            <legend class="legend-light">
+            <h5>
               {{ getFormattedUserNamesForDisplay(getMaxNumberOfUsersInDisplay(order.sharedUsers)) }}
               <ng-template [ngIf]="order.sharedUsers.length > maxNumberOfUsersInDisplay">,&nbsp;</ng-template>
               <div style="display: inline-block;" (mouseover)="onHover(i)" (mouseout)="onMouseout(i)" *ngIf="order.sharedUsers.length > maxNumberOfUsersInDisplay">
@@ -50,24 +50,30 @@
                   [numberOfUsers]="order.sharedUsers.length - maxNumberOfUsersInDisplay"
                 ></app-tooltip>
               </div>
-            </legend>
+            </h5>
           </div>
         </div>
         <div class="deleteItem">
           <div>
-            <legend class="align-end">
+            <h4 class="align-end">
               {{ multiplyValues(order.quantity, order.price) | currency }}
-            </legend>
+            </h4>
             <legend class="legend-light align-end">
               ({{ order.quantity }}x {{ order.price | currency }})
             </legend>
           </div>
-          <a (click)="deleteItem(order)"
-            ><img
-              class="btn-close"
-              src="./assets/close_FILL0_wght400_GRAD0_opsz48.svg"
-              alt="botão fechar"
-          /></a>
+          <a (click)="openDialog(order)"
+            ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          </a>
+          <a class="btn-description" [routerLink]="'/ordens/' + order.id">
+            <button >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+              </svg>
+            </button>
+          </a>
         </div>
       </div>
     </section>
@@ -169,6 +175,7 @@
         <h3>Dividir valor entre</h3>
         <app-button-link
           title="editar pessoas"
+          class="cursor-pointer"
           (buttonAction)="editarPessoas()"
         ></app-button-link>
       </div>

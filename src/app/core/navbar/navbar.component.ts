@@ -18,9 +18,8 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authStateService.isLoggedIn$.subscribe((isLoggedIn: any) => {
-      this.isLoggedIn = isLoggedIn
-    })
+    const token = localStorage.getItem('token')
+    this.isLoggedIn = !!token
   }
 
   logout() {

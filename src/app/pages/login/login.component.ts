@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.authStateService.setLoggedIn(false)
     const token = this.authService.getToken()
     if (token) {
-      this.router.navigate(['ambiente'])
+      this.router.navigate(['pessoas'])
     }
   }
 
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
     ).subscribe({
       next: (response) => {
         this.setToken(response)
-        this.router.navigate(['ambiente']) // Navega para a rota 'ambiente' após o login
+        this.router.navigate(['pessoas']) // Navega para a rota 'ambiente' após o login
       },
       error: (error) => {
         if (error.status === 409) {
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.logar).subscribe({
       next: (response) => {
         this.setToken(response)
-        this.router.navigate(['ambiente']) // Navega para a rota 'ambiente' após o login
+        this.router.navigate(['pessoas']) // Navega para a rota 'ambiente' após o login
       },
       error: (error) => {
         console.error(error)

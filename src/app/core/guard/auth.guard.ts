@@ -18,6 +18,8 @@ export class AuthGuard implements CanActivate {
   ): boolean {
     // Verifica se o token existe no localStorage
     const token = localStorage.getItem('token')
+    console.log(token)
+
     if (token) {
       return true // Permite o acesso à rota
     } else {

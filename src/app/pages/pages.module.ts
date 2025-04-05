@@ -5,7 +5,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { PagesRoutingModule } from './pages-routing.module'
 import { LoginComponent } from './login/login.component'
 import { HttpClientModule } from '@angular/common/http'
-import { AmbienteComponent } from './ambiente/ambiente.component'
 import { UserResgisterComponent } from './user-resgister/user-resgister.component'
 import { ButtonComponent } from '../shared/components/button/button.component'
 import { ButtonLinkComponent } from '../shared/components/button-link/button-link.component'
@@ -32,7 +31,6 @@ export const customCurrencyMaskConfig = {
 @NgModule({
   declarations: [
     LoginComponent,
-    AmbienteComponent,
     UserResgisterComponent,
     ButtonComponent,
     ButtonLinkComponent,
@@ -50,6 +48,6 @@ export const customCurrencyMaskConfig = {
     HttpClientModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
-  exports: [LoginComponent, AmbienteComponent, ButtonLinkComponent, ButtonComponent, TooltipComponent, UserResgisterComponent, OrderComponent]
+  exports: [LoginComponent, ButtonLinkComponent, ButtonComponent, TooltipComponent, UserResgisterComponent, OrderComponent]
 })
 export class PagesModule { }

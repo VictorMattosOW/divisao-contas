@@ -3,8 +3,8 @@
   <dialog class="modal" #dialog>
     <div class="modal-content" *ngIf="this.userToDelete">
       <div >
-        <h5>Tem certeza que deseja excluir o(a) {{this.userToDelete.name}}?</h5>
-        <legend>Se excluir {{this.userToDelete.name}}, ele(a) será excluído(a) da divisão de valor de todos os itens.</legend>
+        <h2>Tem certeza que deseja excluir o(a) <b>{{this.userToDelete.name}}</b>?</h2>
+        <p>Se excluir {{this.userToDelete.name}}, ele(a) será excluído(a) da divisão de valor de todos os itens.</p>
       </div>
       <div class="btn-edit">
         <app-button

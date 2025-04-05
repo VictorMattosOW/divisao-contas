@@ -46,7 +46,7 @@
   display: block;
   border: 1px solid var(--gray2);
   height: 50px;
-  font-size: 1rem;
+  font-size: 1.5rem;
   opacity: 60%;
   width: 100%;
 }
@@ -106,7 +106,7 @@
 
 .form-checkbox > label {
   color: var(--gray2);
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 300;
 }
 
@@ -123,7 +123,7 @@
 
 .mark-all-users > label {
   color: var(--gray);
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 600;
 }
 
@@ -217,8 +217,8 @@ input[type="checkbox"]:checked {
 }
 
 .btn-close {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .info {
@@ -244,14 +244,14 @@ input[type="checkbox"]:checked {
 
 .legend {
   color: var(--cinza, #1F2633);
-  font-size: 12px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 
 .legend-light {
-  font-size: 10px;
+  font-size: 16px;
   color: var(--gray3);
 }
 
@@ -265,7 +265,7 @@ input[type="checkbox"]:checked {
 
 .orderAndPerson_name {
   display: inline;
-  font-size: 0.75rem;
+  font-size: 1rem;
   color: var(--gray3);
 }
 
@@ -275,7 +275,7 @@ input[type="checkbox"]:checked {
 
 .error-msg > p {
   color: var(--error, #d2252f);
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 400;
   line-height: normal;
   padding-top: 6px;
@@ -296,7 +296,7 @@ input[type="checkbox"]:checked {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 350px;
+  width: 450px;
   border-radius: 8px;
   border: 1px solid var(--gray);
   padding: 24px 32px;

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { LoginComponent } from './login/login.component'
-import { AmbienteComponent } from './ambiente/ambiente.component'
 import { AuthGuard } from '../core/guard/auth.guard'
 import { UserResgisterComponent } from './user-resgister/user-resgister.component'
 import { OrderComponent } from './order/order.component'
@@ -12,17 +11,19 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'ambiente',
-    component: AmbienteComponent,
+    path: 'pessoas',
+    component: UserResgisterComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: 'user-resgister',
-    component: UserResgisterComponent
+    path: 'ordens',
+    component: OrderComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'ordens',
-    component: OrderComponent
+    path: 'ordens/:id',
+    component: OrderComponent,
+    canActivate: [AuthGuard]
   },
 ]
 

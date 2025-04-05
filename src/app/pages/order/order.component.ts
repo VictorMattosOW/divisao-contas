@@ -56,6 +56,7 @@ export class OrderComponent extends AbstractComponent implements OnInit, AfterVi
   }
 
   openDialog(order: Order): void {
+    console.log(order)
     this.orderToEditOrDelete = order
     this.dialogElement.nativeElement.show()
   }
@@ -116,14 +117,14 @@ export class OrderComponent extends AbstractComponent implements OnInit, AfterVi
   editarPessoas() {
     this.sessionService.setOrders(this.orders)
     this.sessionService.setPath('/ordens')
-    this.router.navigate(['registrar'])
+    this.router.navigate(['pessoas'])
   }
 
   getUsers() {
     this.sessionService.getUsersObservable().subscribe({
       next: (users) => {
         if (users.length === 0) {
-          this.router.navigate(['user-registration'])
+          this.router.navigate(['pessoas'])
         }
         this.usersList = users
       },
@@ -232,7 +233,9 @@ export class OrderComponent extends AbstractComponent implements OnInit, AfterVi
 
   deleteItem(orderToDelete: Order) {
     this.orders = this.orders.filter((order) => order.id !== orderToDelete.id)
-    // this.saveOrders();
+    this.saveOrders()
+    this.navigateTo()
+    this.closeDialog()
   }
 
   isValidForm(): boolean {
@@ -254,7 +257,12 @@ export class OrderComponent extends AbstractComponent implements OnInit, AfterVi
   }
 
   navigateTo() {
-    this.router.navigate(['resumo'])
+    this.sessionService.getPath().subscribe({
+      next: (path) => {
+        if (path != 'resumo')
+          this.router.navigate(['ordens'])
+      },
+    })
   }
 
   goToSummary() {
