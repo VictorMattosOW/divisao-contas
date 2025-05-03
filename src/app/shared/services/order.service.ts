@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
-import { Order, OrderPerUser } from '../models/order.model';
+import { Injectable } from '@angular/core'
+import { User } from '../models/user.model'
+import { Order, OrderPerUser } from '../models/order.model'
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  constructor() {}
+  constructor() { }
 
   calculateConsumption(
     users: User[],
@@ -14,65 +14,64 @@ export class OrderService {
     tax: number
   ): OrderPerUser[] {
     if (users && orders) {
-      // Cria um objeto para armazenar os valores consumidos por cada pessoa
-      const consumptionMap = {};
+      const consumptionMap: { [key: string]: OrderPerUser } = {}
       users.forEach((user) => {
         consumptionMap[user.id] = {
           name: user.name,
           totalValue: 0,
           orders: [],
-        };
-      });
+        }
+      })
 
-      // Calcula o valor consumido por cada pessoa em cada pedido
       orders.forEach((order) => {
-        const { price, quantity, sharedUsers } = order;
-        const totalValueWithTax = price * quantity * (1 + tax / 100);
+        const { price, quantity, sharedUsers } = order
+        const totalValueWithTax = price * quantity * (1 + tax / 100)
 
-        // Divide o valor total com a taxa igualmente entre todas as pessoas
-        const equalValue =
-          Math.floor((totalValueWithTax / sharedUsers.length) * 100) / 100;
+        // Calcula o valor por pessoa com maior precisão
+        const valuePerUser = totalValueWithTax / sharedUsers.length
 
-        // Calcula o valor total dos valores iguais
-        const totalEqualValue = equalValue * sharedUsers.length;
+        // Arredonda para 2 casas decimais
+        const roundedValue = Math.round(valuePerUser * 100) / 100
 
-        // Calcula o valor restante para ajustar o último usuário
-        const remainder = (totalValueWithTax - totalEqualValue).toFixed(2);
+        // Calcula a diferença devido ao arredondamento
+        let remainder = parseFloat((totalValueWithTax - (roundedValue * sharedUsers.length)).toFixed(2))
 
         sharedUsers.forEach((user, index) => {
-          // Verifica se é o último usuário
-          if (index === sharedUsers.length - 1) {
-            consumptionMap[user.id].totalValue +=
-              Number(remainder) + equalValue;
-            consumptionMap[user.id].orders.push({
-              food: order.name,
-              sharedValue: Number(remainder),
-            });
-          } else {
-            consumptionMap[user.id].totalValue += equalValue;
-            consumptionMap[user.id].orders.push({
-              food: order.name,
-              sharedValue: equalValue,
-            });
+          let userValue = roundedValue
+
+          // Distribui o remainder de forma equilibrada
+          if (remainder !== 0) {
+            const adjustment = remainder > 0 ? 0.01 : -0.01
+            userValue += adjustment
+            remainder = parseFloat((remainder - adjustment).toFixed(2))
           }
-        });
-      });
 
-      // Retorna o array de objetos no formato desejado
-      const result: OrderPerUser[] = Object.values(consumptionMap);
-      return result;
+          consumptionMap[user.id].totalValue += userValue
+          consumptionMap[user.id].orders.push({
+            food: order.name,
+            sharedValue: userValue,
+          })
+        })
+      })
+
+      // Arredonda os totais finais para evitar erros de decimal
+      const result: OrderPerUser[] = Object.values(consumptionMap).map(user => ({
+        ...user,
+        totalValue: parseFloat(user.totalValue.toFixed(2))
+      }))
+
+      return result
     }
-
-    return null;
+    return null
   }
 
   calcularValorFinal(valorInicial: number, porcentagem: number): number {
-    const valorFinal = valorInicial + (valorInicial * porcentagem) / 100;
-    return valorFinal;
+    const valorFinal = valorInicial + (valorInicial * porcentagem) / 100
+    return valorFinal
   }
 
   multiplyValues(quantity: number, price: number): number {
-    return quantity * price;
+    return quantity * price
   }
 
   sumTotalOrders(orders: Order[] = [], percent: number = 1): number {
@@ -84,8 +83,8 @@ export class OrderService {
           this.multiplyValues(order.quantity, order.price),
           percent
         )
-      );
-    }, 0);
-    return totalOrders;
+      )
+    }, 0)
+    return totalOrders
   }
 }

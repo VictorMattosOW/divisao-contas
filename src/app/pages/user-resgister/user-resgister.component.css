@@ -16,7 +16,7 @@ input[type="text"] {
   border-radius: 8px;
   display: block;
   border: 1px solid var(--gray2);
-  width: 80%;
+  width: 93%;
   height: 50px;
   font-size: 1rem;
 }
@@ -26,7 +26,7 @@ input[type="text"] {
   padding: 1rem 0.8rem;
   border-radius: 8px;
   border: 1px solid var(--gray2);
-  width: 80%;
+  width: 93%;
   height: 50px;
   background: transparent;
   opacity: 40%;

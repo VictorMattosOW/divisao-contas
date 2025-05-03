@@ -12,6 +12,9 @@ import { TooltipComponent } from '../shared/components/tooltip/tooltip.component
 import { AutofocusDirective } from '../shared/diretivas/autofocus.directive'
 import { OrderComponent } from './order/order.component'
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency'
+import { SummaryComponent } from './summary/summary.component'
+import { OrderDivisionComponent } from './order-division/order-division.component'
+import { CurrencyPipe } from '../shared/pipes/currency.pipe'
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -37,7 +40,10 @@ export const customCurrencyMaskConfig = {
     TooltipComponent,
     AutofocusDirective,
     UserResgisterComponent,
-    OrderComponent
+    OrderComponent,
+    SummaryComponent,
+    OrderDivisionComponent,
+    CurrencyPipe
   ],
   imports: [
     CommonModule,
@@ -48,6 +54,6 @@ export const customCurrencyMaskConfig = {
     HttpClientModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
-  exports: [LoginComponent, ButtonLinkComponent, ButtonComponent, TooltipComponent, UserResgisterComponent, OrderComponent]
+  exports: [LoginComponent, ButtonLinkComponent, ButtonComponent, TooltipComponent, UserResgisterComponent, OrderComponent, SummaryComponent, OrderDivisionComponent]
 })
 export class PagesModule { }

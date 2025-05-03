@@ -257,12 +257,7 @@ export class OrderComponent extends AbstractComponent implements OnInit, AfterVi
   }
 
   navigateTo() {
-    this.sessionService.getPath().subscribe({
-      next: (path) => {
-        if (path != 'resumo')
-          this.router.navigate(['ordens'])
-      },
-    })
+    this.router.navigate(['resumo'])
   }
 
   goToSummary() {
